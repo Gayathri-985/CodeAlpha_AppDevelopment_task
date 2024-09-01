@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .quote {
+      font-size: 1.5em;
+      margin: 20px 0;
+      color: #555;
+    }
+
+    button, select {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover, select:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Random Quote Generator</h1>
+    <p id="quote" class="quote">Select a category and click the button to generate a random quote!</p>
+    
+    <select id="category" onchange="generateQuote()">
+      <option value="all">All</option>
+      <option value="motivational">Motivational</option>
+      <option value="life">Life</option>
+      <option value="humor">Humor</option>
+      <option value="love">Love</option>
+    </select>
+    
+    <button onclick="generateQuote()">Get New Quote</button>
+    <button onclick="shareQuote()">Share on Twitter</button>
+  </div>
+
+  <script>
+    const quotes = {
+      motivational: [
+        "The only way to do great work is to love what you do. - Steve Jobs",
+        "Believe you can and you're halfway there. - Theodore Roosevelt",
+        "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+        "Don't watch the clock; do what it does. Keep going. - Sam Levenson"
+      ],
+      life: [
+        "Life is what happens when you're busy making other plans. - John Lennon",
+        "Get busy living or get busy dying. - Stephen King",
+        "You have within you right now, everything you need to deal with whatever the world can throw at you. - Brian Tracy",
+        "Life is either a daring adventure or nothing at all. - Helen Keller"
+      ],
+      humor: [
+        "I'm not arguing, I'm just explaining why I'm right.",
+        "I'm on a whiskey diet. I've lost three days already.",
+        "I told my wife she should embrace her mistakes… she gave me a hug.",
+        "I used to think I was indecisive, but now I'm not so sure."
+      ],
+      love: [
+        "You know you're in love when you can't fall asleep because reality is finally better than your dreams. - Dr. Seuss",
+        "Love is composed of a single soul inhabiting two bodies. - Aristotle",
+        "The best thing to hold onto in life is each other. - Audrey Hepburn",
+        "To love and be loved is to feel the sun from both sides. - David Viscott"
+      ]
+    };
+
+    function generateQuote() {
+      const category = document.getElementById("category").value;
+      const allQuotes = category === "all" ? 
+                        [...quotes.motivational, ...quotes.life, ...quotes.humor, ...quotes.love] : 
+                        quotes[category];
+      const randomIndex = Math.floor(Math.random() * allQuotes.length);
+      document.getElementById("quote").innerText = allQuotes[randomIndex];
+    }
+
+    function shareQuote() {
+      const quoteText = document.getElementById("quote").innerText;
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(quoteText)}`;
+      window.open(twitterUrl, '_blank');
+    }
+
+    // Initialize with a random quote from all categories
+    generateQuote();
+  </script>
+</body>
+</html>
